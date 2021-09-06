@@ -9,7 +9,22 @@ const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 const activityRouter = require('./routes/activity');
 //var express = require('express');
-var app = express();
+
+
+
+
+const app = express();
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'default-src': ["'self'"],
+        'frame-ancestors': ["'self'", `https://mc.${process.env.STACK}.exacttarget.com`, `https://jbinteractions.${process.env.STACK}.marketingcloudapps.com`],
+      },
+    },
+  }),
+);
+//send message to slack
 var port = process.env.PORT || 8080;
 const { createServer } = require('http');
 var slack = require('slack');
@@ -34,19 +49,6 @@ try {
  {
 console.error(error);
  }
-
-const app = express();
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        'default-src': ["'self'"],
-        'frame-ancestors': ["'self'", `https://mc.${process.env.STACK}.exacttarget.com`, `https://jbinteractions.${process.env.STACK}.marketingcloudapps.com`],
-      },
-    },
-  }),
-);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
