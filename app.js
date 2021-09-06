@@ -8,6 +8,37 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 const activityRouter = require('./routes/activity');
+//var express = require('express');
+var app = express();
+var port = process.env.PORT || 8080;
+const { createServer } = require('http');
+var slack = require('slack');
+var slacktoken = process.env.SLACK_URL;
+const { InstallProvider } = require('@slack/oauth');
+
+const { WebClient, LogLevel } = require("@slack/web-api");
+const client = new WebClient(slacktoken, {
+  logLevel: LogLevel.DEBUG
+});
+try {
+     const result = client.chat.postMessage({
+     token:slacktoken ,
+     channel:"C02B5UFKESK" ,
+     text:" Journey is activated on "
+     });          
+   console.log(result);
+  
+  const listofchannels=client.conversations.list({
+    token: "xoxb-2387954034646-2446978667030-t71M4uirNOmxQtC4sPfmOmUk"
+    });
+   console.log('listofchannels');
+  console.log(listofchannels);
+  
+ }
+ catch (error)
+ {
+console.error(error);
+ }
 
 const app = express();
 app.use(
