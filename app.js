@@ -23,16 +23,11 @@ const client = new WebClient(slacktoken, {
 try {
      const result = client.chat.postMessage({
      token:slacktoken ,
-     channel:"C02B5UFKESK" ,
+     channel:process.env.channel ,
      text:" Journey is activated on "
      });          
    console.log(result);
   
-  const listofchannels=client.conversations.list({
-    token: "xoxb-2387954034646-2446978667030-t71M4uirNOmxQtC4sPfmOmUk"
-    });
-   console.log('listofchannels');
-  console.log(listofchannels);
   
  }
  catch (error)
